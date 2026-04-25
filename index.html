@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#2563eb">
+<title>거래처 통합 조회</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { -webkit-text-size-adjust: 100%; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Apple SD Gothic Neo', 'Pretendard', 'Malgun Gothic', sans-serif;
+    background: #f5f6f8;
+    color: #1a1a1a;
+    font-size: 15px;
+    line-height: 1.5;
+    padding: 12px;
+    max-width: 720px;
+    margin: 0 auto;
+    padding-bottom: env(safe-area-inset-bottom, 12px);
+  }
+  h1 { font-size: 16px; margin-bottom: 10px; color: #4b5563; font-weight: 600; }
+
+  .search-bar { position: sticky; top: 0; background: #f5f6f8; padding: 8px 0; z-index: 10; }
+  .search-input {
+    width: 100%; padding: 13px 16px; font-size: 16px;
+    border: 1px solid #d1d5db; border-radius: 10px; background: #fff;
+    -webkit-appearance: none;
+  }
+  .search-input:focus { outline: none; border-color: #2563eb; box-shadow: 0 0 0 3px rgba(37,99,235,0.15); }
+
+  .results { margin-top: 8px; }
+  .result-item {
+    background: #fff; padding: 14px 16px; margin-bottom: 6px;
+    border-radius: 10px; cursor: pointer;
+    border: 1px solid #e5e7eb; font-size: 15px;
+    transition: background 0.1s;
+  }
+  .result-item:active { background: #eff6ff; }
+
+  .empty, .loading { text-align: center; padding: 40px 20px; color: #6b7280; font-size: 14px; }
+  .loading::before {
+    content: ''; display: inline-block;
+    width: 14px; height: 14px;
+    border: 2px solid #d1d5db; border-top-color: #2563eb;
+    border-radius: 50%; margin-right: 8px;
+    vertical-align: middle; animation: spin 0.8s linear infinite;
+  }
+  @keyframes spin { to { transform: rotate(360deg); } }
+
+  .back-btn {
+    display: inline-flex; align-items: center;
+    color: #2563eb; font-size: 14px; padding: 8px 0;
+    cursor: pointer; margin-bottom: 4px;
+  }
+  .detail-header {
+    background: #fff; padding: 16px; border-radius: 10px;
+    margin-bottom: 10px; border: 1px solid #e5e7eb;
+  }
+  .vendor-name { font-size: 18px; font-weight: 700; color: #111827; }
+
+  .tabs {
+    display: flex; gap: 6px; margin-bottom: 10px;
+    overflow-x: auto; padding-bottom: 2px;
+    -webkit-overflow-scrolling: touch;
+  }
+  .tabs::-webkit-scrollbar { display: none; }
+  .tab {
+    padding: 10px 14px; background: #fff;
+    border: 1px solid #e5e7eb; border-radius: 8px;
+    font-size: 14px; cursor: pointer; white-space: nowrap;
+    flex-shrink: 0; user-select: none;
+  }
+  .tab.active { background: #2563eb; color: #fff; border-color: #2563eb; }
+  .tab .count { margin-left: 4px; font-size: 12px; opacity: 0.75; }
+  .tab.has-data:not(.active) { color: #1f2937; }
+  .tab.no-data:not(.active) { color: #9ca3af; }
+
+  .tab-content { background: #fff; border-radius: 10px; border: 1px solid #e5e7eb; overflow: hidden; }
+  .record { padding: 14px 16px; border-bottom: 1px solid #f3f4f6; }
+  .record:last-child { border-bottom: none; }
+  .record-row { display: flex; font-size: 14px; margin-bottom: 5px; line-height: 1.55; }
+  .record-row:last-child { margin-bottom: 0; }
+  .field-label { flex-shrink: 0; width: 95px; color: #6b7280; font-size: 13px; }
+  .field-value { flex: 1; word-break: break-word; color: #111827; }
+  .field-value.empty-val { color: #d1d5db; }
+  .empty-tab { padding: 50px 20px; text-align: center; color: #9ca3af; font-size: 14px; }
+  .sheet-tag {
+    display: inline-block; font-size: 11px;
+    background: #f3f4f6; color: #6b7280;
+    padding: 2px 6px; border-radius: 4px; margin-bottom: 6px;
+  }
+</style>
+</head>
+<body>
+
+<div id="app">
+  <div id="search-view">
+    <h1>거래처 통합 조회</h1>
+    <div class="search-bar">
+      <input class="search-input" id="search" placeholder="업체명 검색 (예: 알스퀘어)" autocomplete="off" autocapitalize="off">
+    </div>
+    <div class="results" id="results">
+      <div class="empty">업체명 일부만 입력해도 검색됩니다</div>
+    </div>
+  </div>
+
+  <div id="detail-view" style="display:none;"></div>
+</div>
+
+<script>
+const GAS_URL = 'https://script.google.com/macros/s/AKfycbw_PYcEVM09CPCg7bpdKgYJETaLrYhXr_fu7zdaP7b55SbOCuaq5zhIUmNMj3EC6j9BUA/exec';
+const TABS = ['불만', '미수', 'PC확장성', '복합기확장성'];
+
+let searchTimer = null;
+let currentTab = '불만';
+let currentData = null;
+
+const $ = id => document.getElementById(id);
+const searchInput = $('search');
+const resultsEl = $('results');
+const searchView = $('search-view');
+const detailView = $('detail-view');
+
+// ── JSONP: <script> 태그로 GAS 호출하여 CORS 우회 ──
+function jsonp(params) {
+  return new Promise((resolve, reject) => {
+    const cbName = '_jsonp_cb_' + Date.now() + '_' + Math.floor(Math.random() * 1e9);
+    const allParams = Object.assign({}, params, { callback: cbName });
+    const qs = Object.keys(allParams)
+      .map(k => encodeURIComponent(k) + '=' + encodeURIComponent(allParams[k]))
+      .join('&');
+
+    const script = document.createElement('script');
+    let timer = null;
+
+    const cleanup = () => {
+      try { delete window[cbName]; } catch (e) { window[cbName] = undefined; }
+      if (script.parentNode) script.parentNode.removeChild(script);
+      if (timer) clearTimeout(timer);
+    };
+
+    window[cbName] = data => { cleanup(); resolve(data); };
+    script.onerror = () => { cleanup(); reject(new Error('Network error')); };
+    timer = setTimeout(() => { cleanup(); reject(new Error('Timeout (30s)')); }, 30000);
+
+    script.src = GAS_URL + '?' + qs;
+    document.head.appendChild(script);
+  });
+}
+
+// ── 검색 입력 디바운스 ──
+searchInput.addEventListener('input', e => {
+  clearTimeout(searchTimer);
+  const q = e.target.value.trim();
+  if (q.length < 1) {
+    resultsEl.innerHTML = '<div class="empty">업체명 일부만 입력해도 검색됩니다</div>';
+    return;
+  }
+  resultsEl.innerHTML = '<div class="loading">검색 중...</div>';
+  searchTimer = setTimeout(() => doSearch(q), 250);
+});
+
+async function doSearch(q) {
+  try {
+    const data = await jsonp({ action: 'search', q: q });
+    if (data.error) throw new Error(data.error);
+    renderSearchResults(data.results || []);
+  } catch (err) {
+    resultsEl.innerHTML = '<div class="empty">검색 오류<br><small style="color:#9ca3af">' + escapeHtml(err.message) + '</small></div>';
+  }
+}
+
+function renderSearchResults(results) {
+  if (!results.length) {
+    resultsEl.innerHTML = '<div class="empty">검색 결과 없음</div>';
+    return;
+  }
+  resultsEl.innerHTML = results.map(r =>
+    '<div class="result-item" data-vendor="' + escapeAttr(r.vendor) + '">' + escapeHtml(r.vendor) + '</div>'
+  ).join('');
+  resultsEl.querySelectorAll('.result-item').forEach(el => {
+    el.addEventListener('click', () => openDetail(el.dataset.vendor));
+  });
+}
+
+async function openDetail(vendor) {
+  searchView.style.display = 'none';
+  detailView.style.display = 'block';
+  detailView.innerHTML = '<div class="loading">데이터 불러오는 중...</div>';
+
+  try {
+    const data = await jsonp({ action: 'detail', q: vendor });
+    if (data.error) throw new Error(data.error);
+    currentData = data;
+    currentTab = TABS.find(t => (data[t] || []).length > 0) || '불만';
+    renderDetail();
+  } catch (err) {
+    detailView.innerHTML = '<div class="back-btn" id="back">← 검색으로</div><div class="empty">조회 오류<br><small style="color:#9ca3af">' + escapeHtml(err.message) + '</small></div>';
+    $('back').addEventListener('click', backToSearch);
+  }
+}
+
+function renderDetail() {
+  const data = currentData;
+  const counts = {};
+  TABS.forEach(t => counts[t] = (data[t] || []).length);
+
+  detailView.innerHTML =
+    '<div class="back-btn" id="back">← 검색으로</div>' +
+    '<div class="detail-header"><div class="vendor-name">' + escapeHtml(data.vendor) + '</div></div>' +
+    '<div class="tabs" id="tabs">' +
+      TABS.map(t =>
+        '<div class="tab ' + (t === currentTab ? 'active ' : '') + (counts[t] > 0 ? 'has-data' : 'no-data') + '" data-tab="' + t + '">' +
+          t + '<span class="count">' + counts[t] + '</span>' +
+        '</div>'
+      ).join('') +
+    '</div>' +
+    '<div class="tab-content" id="tab-content"></div>';
+
+  $('back').addEventListener('click', backToSearch);
+  detailView.querySelectorAll('.tab').forEach(el => {
+    el.addEventListener('click', () => switchTab(el.dataset.tab));
+  });
+  renderTabContent();
+}
+
+function switchTab(tab) {
+  currentTab = tab;
+  detailView.querySelectorAll('.tab').forEach(el => {
+    el.classList.toggle('active', el.dataset.tab === tab);
+  });
+  renderTabContent();
+}
+
+function renderTabContent() {
+  const records = (currentData[currentTab] || []);
+  const el = $('tab-content');
+
+  if (!records.length) {
+    el.innerHTML = '<div class="empty-tab">데이터 없음</div>';
+    return;
+  }
+
+  el.innerHTML = records.map(r => {
+    const sheetTag = r._시트 ? '<div class="sheet-tag">' + escapeHtml(r._시트) + '</div>' : '';
+    const rows = Object.keys(r)
+      .filter(k => k !== '_시트')
+      .map(k => {
+        const val = formatVal(r[k]);
+        const cls = (val === '-') ? 'field-value empty-val' : 'field-value';
+        return '<div class="record-row"><div class="field-label">' + escapeHtml(k) + '</div><div class="' + cls + '">' + escapeHtml(val) + '</div></div>';
+      }).join('');
+    return '<div class="record">' + sheetTag + rows + '</div>';
+  }).join('');
+}
+
+function backToSearch() {
+  detailView.style.display = 'none';
+  searchView.style.display = 'block';
+  detailView.innerHTML = '';
+  currentData = null;
+  searchInput.focus();
+}
+
+function formatVal(v) {
+  if (v === null || v === undefined || v === '') return '-';
+  if (typeof v === 'number') return v.toLocaleString('ko-KR');
+  return String(v);
+}
+function escapeHtml(s) {
+  return String(s == null ? '' : s)
+    .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;').replace(/'/g, '&#39;');
+}
+function escapeAttr(s) { return escapeHtml(s); }
+</script>
+</body>
+</html>
