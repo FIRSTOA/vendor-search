@@ -109,7 +109,7 @@
 </div>
 
 <script>
-const GAS_URL = 'https://script.google.com/macros/s/AKfycbwamD4uvetE-o3vl5LVkv1B5aRVMshrW6GTalKiZkG6GhH5hahNzhEVFR7zKFlvF0mG/exec';
+const GAS_URL = 'https://script.google.com/macros/s/AKfycby6iFaFUsBcKjZaAvdH1wY9qqNR_pp9pZEa15OmQHXU3TUAKxJ0MwyIxzfPlN5TIEnO/exec';
 const TABS = ['불만', '미수', 'PC확장성', '복합기확장성'];
 
 let searchTimer = null;
@@ -142,7 +142,7 @@ function jsonp(params) {
 
     window[cbName] = data => { cleanup(); resolve(data); };
     script.onerror = () => { cleanup(); reject(new Error('Network error')); };
-    timer = setTimeout(() => { cleanup(); reject(new Error('Timeout (30s)')); }, 30000);
+    timer = setTimeout(() => { cleanup(); reject(new Error("Timeout (60s)")); }, 60000);
 
     script.src = GAS_URL + '?' + qs;
     document.head.appendChild(script);
