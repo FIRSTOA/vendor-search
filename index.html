@@ -322,41 +322,35 @@
       font-size: 15.5px; font-weight: 600;
       color: var(--text);
       letter-spacing: -0.3px;
-      margin-bottom: 6px;
+      margin-bottom: 8px;
       overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
     }
-    .vendor-badges { display: flex; flex-wrap: wrap; gap: 4px; align-items: center; }
-    .badge {
-      display: inline-flex; align-items: center; gap: 3px;
-      padding: 2px 8px;
-      border-radius: 6px;
-      font-size: 11.5px; font-weight: 600;
-      letter-spacing: -0.2px;
-    }
-    .badge .badge-num {
-      background: rgba(0,0,0,0.08);
-      padding: 0 5px;
-      border-radius: 4px;
-      font-weight: 700;
-      margin-left: 2px;
-    }
-    .badge.bulman { background: var(--color-bulman-bg); color: var(--color-bulman); }
-    .badge.misu { background: var(--color-misu-bg); color: var(--color-misu); }
-    .badge.pc { background: var(--color-pc-bg); color: var(--color-pc); }
-    .badge.mfp { background: var(--color-mfp-bg); color: var(--color-mfp); }
-    .badge.as { background: var(--color-as-bg); color: var(--color-as); }
 
-    .vendor-as-line {
-      margin-top: 6px;
-      display: inline-flex; align-items: center; gap: 5px;
+    /* 카테고리별 메타 라인 */
+    .meta-lines {
+      display: flex; flex-direction: column; gap: 4px;
+    }
+    .meta-line {
+      display: flex; align-items: center; gap: 6px;
       font-size: 11.5px; font-weight: 600;
-      color: var(--color-as);
-      background: var(--color-as-bg);
       padding: 3px 8px;
       border-radius: 6px;
+      width: fit-content;
+      max-width: 100%;
     }
-    .vendor-as-line svg { width: 11px; height: 11px; }
-    .vendor-empty { color: var(--text-tertiary); font-size: 12px; }
+    .meta-line svg { width: 11px; height: 11px; flex-shrink: 0; }
+    .meta-line .meta-text {
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+    .meta-line.bulman { background: var(--color-bulman-bg); color: var(--color-bulman); }
+    .meta-line.misu { background: var(--color-misu-bg); color: var(--color-misu); }
+    .meta-line.pc { background: var(--color-pc-bg); color: var(--color-pc); }
+    .meta-line.mfp { background: var(--color-mfp-bg); color: var(--color-mfp); }
+    .meta-line.as { background: var(--color-as-bg); color: var(--color-as); }
+
+    .vendor-empty { color: var(--text-tertiary); font-size: 12px; font-weight: 500; }
     .chevron { color: var(--text-tertiary); flex-shrink: 0; width: 8px; height: 14px; }
 
     .empty-state {
@@ -386,7 +380,7 @@
       100% { background-position: -200% 0; }
     }
 
-    /* ─── 상세 화면 헤더 ─── */
+    /* ─── 상세 화면 ─── */
     .app-header {
       position: sticky; top: 0; z-index: 10;
       background: rgba(245,245,247,0.78);
@@ -550,9 +544,7 @@
       margin: 12px 0;
     }
 
-    /* ═══════════════════════════════════════
-       관리자 화면 (AS 파서)
-       ═══════════════════════════════════════ */
+    /* ═══ 관리자 화면 ═══ */
     .admin-section { padding: 16px; padding-bottom: calc(60px + env(safe-area-inset-bottom)); }
     .admin-card {
       background: white;
@@ -871,7 +863,7 @@
   <div id="panel" class="content"></div>
 </div>
 
-<!-- ════ 관리자 화면 (AS 파서) ════ -->
+<!-- ════ 관리자 화면 ════ -->
 <div id="screen-admin" class="screen" style="display:none;">
   <header class="app-header">
     <div class="app-header-inner">
@@ -962,10 +954,19 @@
 <div id="toast" class="toast">복사 완료</div>
 
 <script>
-const GAS_URL = 'https://script.google.com/macros/s/AKfycbwnzufxv6DKkz6IdskocwNZ4-pk2KuciX2-cceR7ed7pW5Ra2LyBTXQy8P2l94aeQVM/exec';
+const GAS_URL = 'https://script.google.com/macros/s/AKfycbxgihb96K3rnjlCANOU0lZS2DPCaIlWx63ARvfYOzPu05pO6V0bctSnKjdhOxbonICe/exec';
 
 const CATEGORIES = ['불만', '미수', 'PC확장성', '복합기확장성', 'AS'];
 const BADGE_CLASS = { '불만':'bulman', '미수':'misu', 'PC확장성':'pc', '복합기확장성':'mfp', 'AS':'as' };
+
+// 카테고리별 SVG 아이콘 (인라인)
+const CATEGORY_ICON = {
+  '불만': '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>',
+  '미수': '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>',
+  'PC확장성': '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>',
+  '복합기확장성': '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>',
+  'AS': '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>'
+};
 
 const LONG_TEXT_FIELDS = new Set([
   '불만내용', '사실확인', '대안제시', '재발방지',
@@ -996,6 +997,35 @@ function jsonp(params, timeoutMs) {
     script.onerror = () => { cleanup(); reject(new Error('network')); };
     document.body.appendChild(script);
   });
+}
+
+// ─── 포맷팅 헬퍼 ───
+function formatDate(s) {
+  if (!s) return '';
+  // Date toString (예: "Tue Feb 10 2026 ...")
+  if (typeof s === 'string' && /^[A-Za-z]{3}\s+[A-Za-z]{3}\s+\d/.test(s)) {
+    try {
+      const d = new Date(s);
+      if (!isNaN(d)) return d.getFullYear() + '.' + (d.getMonth()+1) + '.' + d.getDate();
+    } catch (e) {}
+  }
+  // ISO 형식 yyyy-MM-dd
+  const iso = String(s).match(/^(\d{4})-(\d{1,2})-(\d{1,2})/);
+  if (iso) return iso[1] + '.' + parseInt(iso[2]) + '.' + parseInt(iso[3]);
+  return String(s);
+}
+
+function formatRegion(s) {
+  if (!s) return '';
+  s = String(s).trim();
+  // "수도권A" → "A지역"
+  let m = s.match(/^수도권\s*([A-Ea-e])$/);
+  if (m) return m[1].toUpperCase() + '지역';
+  // 단일 영문자 "C" → "C지역"
+  if (/^[A-Ea-e]$/.test(s)) return s.toUpperCase() + '지역';
+  // 길면 자르기
+  if (s.length > 8) return s.substring(0, 8) + '…';
+  return s;
 }
 
 // ─── 대시보드 로드 ───
@@ -1112,35 +1142,32 @@ function renderResults(data) {
   let html = '';
   data.results.forEach((item, idx) => {
     const counts = item.counts || {};
-    let badges = '';
-    // AS 제외 (별도 라인에 표시)
-    for (const cat of ['불만', '미수', 'PC확장성', '복합기확장성']) {
+    const meta = item.meta || {};
+
+    let metaLines = '';
+    for (const cat of CATEGORIES) {
       const n = counts[cat] || 0;
       if (n === 0) continue;
-      badges += `<span class="badge ${BADGE_CLASS[cat]}">${cat}<span class="badge-num">${n}</span></span>`;
-    }
-    if (!badges) badges = '<span class="vendor-empty">기본 데이터 없음</span>';
+      const m = meta[cat] || {};
+      const parts = [`${cat} ${n}건`];
+      const dateStr = formatDate(m.d);
+      const regionStr = formatRegion(m.r);
+      if (dateStr) parts.push(dateStr);
+      if (regionStr) parts.push(regionStr);
 
-    // AS 별도 라인
-    let asLine = '';
-    if (item.as_meta) {
-      const m = item.as_meta;
-      const parts = ['AS ' + (counts['AS'] || 0) + '건'];
-      if (m.recent_date) parts.push(m.recent_date);
-      if (m.region) parts.push(m.region);
-      asLine = `
-        <div class="vendor-as-line">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>
-          ${escapeHtml(parts.join(' · '))}
+      metaLines += `
+        <div class="meta-line ${BADGE_CLASS[cat]}">
+          ${CATEGORY_ICON[cat]}
+          <span class="meta-text">${escapeHtml(parts.join(' · '))}</span>
         </div>`;
     }
+    if (!metaLines) metaLines = '<span class="vendor-empty">데이터 없음</span>';
 
     html += `
       <div class="vendor-card" style="animation-delay:${Math.min(idx * 30, 240)}ms" onclick="selectVendor('${escapeAttr(item.vendor)}')">
         <div class="vendor-card-content">
           <div class="vendor-name">${escapeHtml(item.vendor)}</div>
-          <div class="vendor-badges">${badges}</div>
-          ${asLine}
+          <div class="meta-lines">${metaLines}</div>
         </div>
         <svg class="chevron" width="8" height="14" viewBox="0 0 8 14" fill="none">
           <path d="M1 1L7 7L1 13" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
@@ -1257,9 +1284,7 @@ function goBack() {
   setTimeout(() => searchInput.focus(), 100);
 }
 
-// ═══════════════════════════════════════
-// 관리자 화면
-// ═══════════════════════════════════════
+// ═══ 관리자 화면 ═══
 function openAdmin() {
   const search = document.getElementById('screen-search');
   const admin = document.getElementById('screen-admin');
@@ -1337,7 +1362,6 @@ async function handleFiles(files) {
     }
   }
 
-  // 중복 제거
   const seen = new Set();
   const dedup = [];
   for (const r of allRows) {
@@ -1346,8 +1370,6 @@ async function handleFiles(files) {
     seen.add(key);
     dedup.push(r);
   }
-
-  // 날짜순 정렬 (최신부터)
   dedup.sort((a, b) => (b.AS날짜 || '').localeCompare(a.AS날짜 || ''));
 
   parsedRows = dedup;
