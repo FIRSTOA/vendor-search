@@ -42,8 +42,8 @@
       --color-misu-bg: #fde7ea;
       --color-cho: #d97706;
       --color-cho-bg: #fef3c7;
-      --color-end: #475569;
-      --color-end-bg: #f1f5f9;
+      --color-info: #475569;
+      --color-info-bg: #f1f5f9;
       --color-pc: #2658d4;
       --color-pc-bg: #e7efff;
       --color-mfp: #6535d4;
@@ -264,7 +264,7 @@
     .stat-card-icon.bulman { background: var(--color-bulman-bg); color: var(--color-bulman); }
     .stat-card-icon.misu { background: var(--color-misu-bg); color: var(--color-misu); }
     .stat-card-icon.cho { background: var(--color-cho-bg); color: var(--color-cho); }
-    .stat-card-icon.end { background: var(--color-end-bg); color: var(--color-end); }
+    .stat-card-icon.info { background: var(--color-info-bg); color: var(--color-info); }
     .stat-card-icon.pc { background: var(--color-pc-bg); color: var(--color-pc); }
     .stat-card-icon.mfp { background: var(--color-mfp-bg); color: var(--color-mfp); }
     .stat-card-icon.as { background: var(--color-as-bg); color: var(--color-as); }
@@ -300,7 +300,7 @@
       flex-shrink: 0;
     }
     .info-text { display: flex; flex-direction: column; gap: 1px; flex: 1; min-width: 0; }
-    .info-title { font-size: 13px; font-weight: 600; color: var(--text); }
+    .info-title-x { font-size: 13px; font-weight: 600; color: var(--text); }
     .info-sub { font-size: 11.5px; color: var(--text-tertiary); }
 
     .vendor-card {
@@ -320,6 +320,26 @@
       background: #f8f8fa;
     }
     .vendor-card-content { flex: 1; min-width: 0; }
+
+    /* 업체정보 (계약종료) - 강조 라인 (업체명 위) */
+    .contract-line {
+      display: inline-flex; align-items: center; gap: 5px;
+      margin-bottom: 6px;
+      padding: 4px 10px;
+      border-radius: 6px;
+      background: var(--color-info-bg);
+      color: var(--color-info);
+      font-size: 11.5px; font-weight: 700;
+      letter-spacing: -0.2px;
+      max-width: 100%;
+    }
+    .contract-line svg { width: 11px; height: 11px; flex-shrink: 0; }
+    .contract-line .contract-text {
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
     .vendor-name {
       font-size: 15.5px; font-weight: 600;
       color: var(--text);
@@ -348,7 +368,6 @@
     .meta-line.bulman { background: var(--color-bulman-bg); color: var(--color-bulman); }
     .meta-line.misu { background: var(--color-misu-bg); color: var(--color-misu); }
     .meta-line.cho { background: var(--color-cho-bg); color: var(--color-cho); }
-    .meta-line.end { background: var(--color-end-bg); color: var(--color-end); }
     .meta-line.pc { background: var(--color-pc-bg); color: var(--color-pc); }
     .meta-line.mfp { background: var(--color-mfp-bg); color: var(--color-mfp); }
     .meta-line.as { background: var(--color-as-bg); color: var(--color-as); }
@@ -547,7 +566,6 @@
       margin: 12px 0;
     }
 
-    /* ═══ 관리자 ═══ */
     .admin-section { padding: 16px; padding-bottom: calc(60px + env(safe-area-inset-bottom)); }
     .admin-card {
       background: white;
@@ -735,7 +753,7 @@
       <div class="hero">
         <span class="hero-eyebrow">거래처 통합</span>
         <h1 class="hero-title">한 번에<br>모두 조회</h1>
-        <div class="hero-sub">불만 · 미수 · 초과 · 계약 · 확장성 · AS</div>
+        <div class="hero-sub">불만 · 미수 · 초과 · 확장성 · AS · 업체정보</div>
       </div>
     </div>
   </header>
@@ -799,12 +817,12 @@
         </div>
       </div>
       <div class="stat-card" style="animation-delay:180ms">
-        <div class="stat-card-icon end">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+        <div class="stat-card-icon info">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="2" width="16" height="20" rx="2" ry="2"/><path d="M9 22v-4h6v4"/><line x1="8" y1="6" x2="8" y2="6.01"/><line x1="16" y1="6" x2="16" y2="6.01"/><line x1="12" y1="6" x2="12" y2="6.01"/><line x1="12" y1="10" x2="12" y2="10.01"/><line x1="12" y1="14" x2="12" y2="14.01"/><line x1="16" y1="10" x2="16" y2="10.01"/><line x1="16" y1="14" x2="16" y2="14.01"/><line x1="8" y1="10" x2="8" y2="10.01"/><line x1="8" y1="14" x2="8" y2="14.01"/></svg>
         </div>
         <div class="stat-card-info">
-          <div class="stat-card-num" id="statEnd">—</div>
-          <div class="stat-card-cat">계약종료</div>
+          <div class="stat-card-num" id="statInfo">—</div>
+          <div class="stat-card-cat">업체정보 (임대)</div>
         </div>
       </div>
       <div class="stat-card" style="animation-delay:240ms">
@@ -841,7 +859,7 @@
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/></svg>
       </div>
       <div class="info-text">
-        <div class="info-title">자동 인덱싱</div>
+        <div class="info-title-x">자동 인덱싱</div>
         <div class="info-sub">매시간 모든 시트를 통합 갱신합니다</div>
       </div>
     </div>
@@ -967,22 +985,22 @@
 <div id="toast" class="toast">복사 완료</div>
 
 <script>
-const GAS_URL = 'https://script.google.com/macros/s/AKfycbyolAylHeXoIh6So4vLcVl0YaA-5pwh4WrKbmxMN1dJUq3dQcnyO-rB6VP58Vn1IiCV/exec';
+const GAS_URL = 'https://script.google.com/macros/s/AKfycbzbzqIIbrfmzQQz7vtxhagtjvmMd0mxt3i3t6hGlLPBKZZKrfXvUJwCQuJMP67rBYlL/exec';
 
-const CATEGORIES = ['불만', '미수', '초과', '계약종료', 'PC확장성', '복합기확장성', 'AS'];
+const CATEGORIES = ['불만', '미수', '초과', 'PC확장성', '복합기확장성', 'AS', '업체정보'];
 const BADGE_CLASS = {
-  '불만':'bulman', '미수':'misu', '초과':'cho', '계약종료':'end',
-  'PC확장성':'pc', '복합기확장성':'mfp', 'AS':'as'
+  '불만':'bulman', '미수':'misu', '초과':'cho',
+  'PC확장성':'pc', '복합기확장성':'mfp', 'AS':'as', '업체정보':'info'
 };
 
 const CATEGORY_ICON = {
   '불만': '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>',
   '미수': '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>',
   '초과': '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg>',
-  '계약종료': '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>',
   'PC확장성': '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>',
   '복합기확장성': '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>',
-  'AS': '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>'
+  'AS': '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>',
+  '업체정보': '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>'
 };
 
 const LONG_TEXT_FIELDS = new Set([
@@ -992,7 +1010,9 @@ const LONG_TEXT_FIELDS = new Set([
   '도로명주소', '세부주소',
   '내용', '처리내용', '접수내용',
   '위탁/유지보수및기타사항',
-  '주소(실납품주소,도로명주소)'
+  '주소(실납품주소,도로명주소)',
+  '주소상세주소',
+  '추가조건'
 ]);
 const PHONE_FIELDS = new Set(['거래처연락처', '연락처', '키맨전화번호', '휴대폰번호', '전화번호', '일반전화']);
 const EMAIL_FIELDS = new Set(['메일주소']);
@@ -1051,7 +1071,7 @@ async function loadDashboard() {
     document.getElementById('statBulman').textContent = (meta['count_불만'] || 0).toLocaleString();
     document.getElementById('statMisu').textContent = (meta['count_미수'] || 0).toLocaleString();
     document.getElementById('statCho').textContent = (meta['count_초과'] || 0).toLocaleString();
-    document.getElementById('statEnd').textContent = (meta['count_계약종료'] || 0).toLocaleString();
+    document.getElementById('statInfo').textContent = (meta['count_업체정보'] || 0).toLocaleString();
     document.getElementById('statPC').textContent = (meta['count_PC확장성'] || 0).toLocaleString();
     document.getElementById('statMFP').textContent = (meta['count_복합기확장성'] || 0).toLocaleString();
     document.getElementById('statAS').textContent = (meta['count_AS'] || 0).toLocaleString() + '건';
@@ -1157,8 +1177,24 @@ function renderResults(data) {
     const counts = item.counts || {};
     const meta = item.meta || {};
 
+    // 업체정보 - 별도 강조 라인 (업체명 위에 표시)
+    let contractLine = '';
+    const infoMeta = meta['업체정보'];
+    if (infoMeta && infoMeta.d) {
+      const parts = ['계약 종료', formatDate(infoMeta.d)];
+      const reg = formatRegion(infoMeta.r);
+      if (reg) parts.push(reg);
+      contractLine = `
+        <div class="contract-line">
+          ${CATEGORY_ICON['업체정보']}
+          <span class="contract-text">${escapeHtml(parts.join(' · '))}</span>
+        </div>`;
+    }
+
+    // 다른 카테고리 메타 라인 (업체정보 제외)
     let metaLines = '';
     for (const cat of CATEGORIES) {
+      if (cat === '업체정보') continue;
       const n = counts[cat] || 0;
       if (n === 0) continue;
       const m = meta[cat] || {};
@@ -1174,11 +1210,12 @@ function renderResults(data) {
           <span class="meta-text">${escapeHtml(parts.join(' · '))}</span>
         </div>`;
     }
-    if (!metaLines) metaLines = '<span class="vendor-empty">데이터 없음</span>';
+    if (!metaLines && !contractLine) metaLines = '<span class="vendor-empty">데이터 없음</span>';
 
     html += `
       <div class="vendor-card" style="animation-delay:${Math.min(idx * 30, 240)}ms" onclick="selectVendor('${escapeAttr(item.vendor)}')">
         <div class="vendor-card-content">
+          ${contractLine}
           <div class="vendor-name">${escapeHtml(item.vendor)}</div>
           <div class="meta-lines">${metaLines}</div>
         </div>
@@ -1311,7 +1348,7 @@ function closeAdmin() {
   document.getElementById('screen-search').style.display = 'block';
 }
 
-// ─── 파서 (이전과 동일) ───
+// ─── 파서 ───
 const AS_HEADERS = ['AS날짜','작성자','업체명','지역','등급','모델명','시리얼넘버','자산기번','내용','처리내용'];
 let parsedRows = [];
 const dropZone = document.getElementById('dropZone');
