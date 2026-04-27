@@ -40,6 +40,10 @@
       --color-bulman-bg: #fff2eb;
       --color-misu: #e63946;
       --color-misu-bg: #fde7ea;
+      --color-cho: #d97706;
+      --color-cho-bg: #fef3c7;
+      --color-end: #475569;
+      --color-end-bg: #f1f5f9;
       --color-pc: #2658d4;
       --color-pc-bg: #e7efff;
       --color-mfp: #6535d4;
@@ -54,7 +58,6 @@
 
     .screen { min-height: 100vh; min-height: 100dvh; }
 
-    /* ─── 브랜드 헤더 ─── */
     .brand-header {
       background: linear-gradient(180deg, var(--brand-deep) 0%, var(--brand-mid) 100%);
       color: white;
@@ -124,7 +127,6 @@
       color: rgba(255,255,255,0.6);
     }
 
-    /* ─── 검색 ─── */
     .search-wrap {
       position: sticky;
       top: 0;
@@ -175,7 +177,6 @@
 
     .content { padding: 8px 16px calc(60px + env(safe-area-inset-bottom)); }
 
-    /* ─── 대시보드 ─── */
     .dashboard { padding: 16px 16px calc(60px + env(safe-area-inset-bottom)); }
     .section-label {
       display: flex; align-items: center; justify-content: space-between;
@@ -262,6 +263,8 @@
     }
     .stat-card-icon.bulman { background: var(--color-bulman-bg); color: var(--color-bulman); }
     .stat-card-icon.misu { background: var(--color-misu-bg); color: var(--color-misu); }
+    .stat-card-icon.cho { background: var(--color-cho-bg); color: var(--color-cho); }
+    .stat-card-icon.end { background: var(--color-end-bg); color: var(--color-end); }
     .stat-card-icon.pc { background: var(--color-pc-bg); color: var(--color-pc); }
     .stat-card-icon.mfp { background: var(--color-mfp-bg); color: var(--color-mfp); }
     .stat-card-icon.as { background: var(--color-as-bg); color: var(--color-as); }
@@ -300,7 +303,6 @@
     .info-title { font-size: 13px; font-weight: 600; color: var(--text); }
     .info-sub { font-size: 11.5px; color: var(--text-tertiary); }
 
-    /* ─── 검색 결과 카드 ─── */
     .vendor-card {
       background: var(--bg-elevated);
       border-radius: 14px;
@@ -326,7 +328,6 @@
       overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
     }
 
-    /* 카테고리별 메타 라인 */
     .meta-lines {
       display: flex; flex-direction: column; gap: 4px;
     }
@@ -346,6 +347,8 @@
     }
     .meta-line.bulman { background: var(--color-bulman-bg); color: var(--color-bulman); }
     .meta-line.misu { background: var(--color-misu-bg); color: var(--color-misu); }
+    .meta-line.cho { background: var(--color-cho-bg); color: var(--color-cho); }
+    .meta-line.end { background: var(--color-end-bg); color: var(--color-end); }
     .meta-line.pc { background: var(--color-pc-bg); color: var(--color-pc); }
     .meta-line.mfp { background: var(--color-mfp-bg); color: var(--color-mfp); }
     .meta-line.as { background: var(--color-as-bg); color: var(--color-as); }
@@ -380,7 +383,6 @@
       100% { background-position: -200% 0; }
     }
 
-    /* ─── 상세 화면 ─── */
     .app-header {
       position: sticky; top: 0; z-index: 10;
       background: rgba(245,245,247,0.78);
@@ -451,6 +453,7 @@
       transition: background 0.15s, color 0.15s, transform 0.1s;
       border: 1px solid var(--border);
       display: inline-flex; align-items: center; gap: 4px;
+      flex-shrink: 0;
     }
     .tab:active { transform: scale(0.96); }
     .tab.active {
@@ -544,7 +547,7 @@
       margin: 12px 0;
     }
 
-    /* ═══ 관리자 화면 ═══ */
+    /* ═══ 관리자 ═══ */
     .admin-section { padding: 16px; padding-bottom: calc(60px + env(safe-area-inset-bottom)); }
     .admin-card {
       background: white;
@@ -604,11 +607,7 @@
       margin: 0 auto 10px;
       color: var(--brand-accent);
     }
-    .drop-zone-text {
-      font-size: 14px; font-weight: 600;
-      color: var(--text);
-      margin-bottom: 4px;
-    }
+    .drop-zone-text { font-size: 14px; font-weight: 600; color: var(--text); margin-bottom: 4px; }
     .drop-zone-sub { font-size: 12px; color: var(--text-tertiary); }
     .drop-zone-btn {
       display: inline-block;
@@ -661,11 +660,7 @@
       background: #f5f5f7;
       border-radius: 8px;
     }
-    .stat-mini-value {
-      font-size: 18px; font-weight: 800;
-      letter-spacing: -0.3px;
-      color: var(--text);
-    }
+    .stat-mini-value { font-size: 18px; font-weight: 800; letter-spacing: -0.3px; color: var(--text); }
     .stat-mini-label {
       font-size: 10px; font-weight: 700;
       color: var(--text-tertiary);
@@ -740,7 +735,7 @@
       <div class="hero">
         <span class="hero-eyebrow">거래처 통합</span>
         <h1 class="hero-title">한 번에<br>모두 조회</h1>
-        <div class="hero-sub">불만 · 미수 · 확장성 · AS</div>
+        <div class="hero-sub">불만 · 미수 · 초과 · 계약 · 확장성 · AS</div>
       </div>
     </div>
   </header>
@@ -795,6 +790,24 @@
         </div>
       </div>
       <div class="stat-card" style="animation-delay:120ms">
+        <div class="stat-card-icon cho">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg>
+        </div>
+        <div class="stat-card-info">
+          <div class="stat-card-num" id="statCho">—</div>
+          <div class="stat-card-cat">초과</div>
+        </div>
+      </div>
+      <div class="stat-card" style="animation-delay:180ms">
+        <div class="stat-card-icon end">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+        </div>
+        <div class="stat-card-info">
+          <div class="stat-card-num" id="statEnd">—</div>
+          <div class="stat-card-cat">계약종료</div>
+        </div>
+      </div>
+      <div class="stat-card" style="animation-delay:240ms">
         <div class="stat-card-icon pc">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
         </div>
@@ -803,7 +816,7 @@
           <div class="stat-card-cat">PC확장성</div>
         </div>
       </div>
-      <div class="stat-card" style="animation-delay:180ms">
+      <div class="stat-card" style="animation-delay:300ms">
         <div class="stat-card-icon mfp">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>
         </div>
@@ -812,7 +825,7 @@
           <div class="stat-card-cat">복합기확장성</div>
         </div>
       </div>
-      <div class="stat-card stat-card-wide" style="animation-delay:240ms">
+      <div class="stat-card stat-card-wide" style="animation-delay:360ms">
         <div class="stat-card-icon as">
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>
         </div>
@@ -837,7 +850,7 @@
   <div id="resultArea" class="content" style="display:none;"></div>
 </div>
 
-<!-- ════ 상세 화면 ════ -->
+<!-- ════ 상세 ════ -->
 <div id="screen-detail" class="screen" style="display:none;">
   <header class="app-header">
     <div class="app-header-inner">
@@ -863,7 +876,7 @@
   <div id="panel" class="content"></div>
 </div>
 
-<!-- ════ 관리자 화면 ════ -->
+<!-- ════ 관리자 ════ -->
 <div id="screen-admin" class="screen" style="display:none;">
   <header class="app-header">
     <div class="app-header-inner">
@@ -954,15 +967,19 @@
 <div id="toast" class="toast">복사 완료</div>
 
 <script>
-const GAS_URL = 'https://script.google.com/macros/s/AKfycbxgihb96K3rnjlCANOU0lZS2DPCaIlWx63ARvfYOzPu05pO6V0bctSnKjdhOxbonICe/exec';
+const GAS_URL = 'https://script.google.com/macros/s/AKfycbyolAylHeXoIh6So4vLcVl0YaA-5pwh4WrKbmxMN1dJUq3dQcnyO-rB6VP58Vn1IiCV/exec';
 
-const CATEGORIES = ['불만', '미수', 'PC확장성', '복합기확장성', 'AS'];
-const BADGE_CLASS = { '불만':'bulman', '미수':'misu', 'PC확장성':'pc', '복합기확장성':'mfp', 'AS':'as' };
+const CATEGORIES = ['불만', '미수', '초과', '계약종료', 'PC확장성', '복합기확장성', 'AS'];
+const BADGE_CLASS = {
+  '불만':'bulman', '미수':'misu', '초과':'cho', '계약종료':'end',
+  'PC확장성':'pc', '복합기확장성':'mfp', 'AS':'as'
+};
 
-// 카테고리별 SVG 아이콘 (인라인)
 const CATEGORY_ICON = {
   '불만': '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>',
   '미수': '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>',
+  '초과': '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg>',
+  '계약종료': '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>',
   'PC확장성': '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>',
   '복합기확장성': '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>',
   'AS': '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>'
@@ -973,9 +990,11 @@ const LONG_TEXT_FIELDS = new Set([
   '특이사항', '첫등록내용', '영업진행상황', '영업활동',
   '인원 추가 설명', '시기 추가 설명', '주소', '프로젝트주소',
   '도로명주소', '세부주소',
-  '내용', '처리내용'
+  '내용', '처리내용', '접수내용',
+  '위탁/유지보수및기타사항',
+  '주소(실납품주소,도로명주소)'
 ]);
-const PHONE_FIELDS = new Set(['거래처연락처', '연락처', '키맨전화번호', '휴대폰번호']);
+const PHONE_FIELDS = new Set(['거래처연락처', '연락처', '키맨전화번호', '휴대폰번호', '전화번호', '일반전화']);
 const EMAIL_FIELDS = new Set(['메일주소']);
 
 const state = { current: null, activeTab: '불만', jsonpSeq: 0, searchSeq: 0 };
@@ -999,17 +1018,14 @@ function jsonp(params, timeoutMs) {
   });
 }
 
-// ─── 포맷팅 헬퍼 ───
 function formatDate(s) {
   if (!s) return '';
-  // Date toString (예: "Tue Feb 10 2026 ...")
   if (typeof s === 'string' && /^[A-Za-z]{3}\s+[A-Za-z]{3}\s+\d/.test(s)) {
     try {
       const d = new Date(s);
       if (!isNaN(d)) return d.getFullYear() + '.' + (d.getMonth()+1) + '.' + d.getDate();
     } catch (e) {}
   }
-  // ISO 형식 yyyy-MM-dd
   const iso = String(s).match(/^(\d{4})-(\d{1,2})-(\d{1,2})/);
   if (iso) return iso[1] + '.' + parseInt(iso[2]) + '.' + parseInt(iso[3]);
   return String(s);
@@ -1018,17 +1034,13 @@ function formatDate(s) {
 function formatRegion(s) {
   if (!s) return '';
   s = String(s).trim();
-  // "수도권A" → "A지역"
   let m = s.match(/^수도권\s*([A-Ea-e])$/);
   if (m) return m[1].toUpperCase() + '지역';
-  // 단일 영문자 "C" → "C지역"
   if (/^[A-Ea-e]$/.test(s)) return s.toUpperCase() + '지역';
-  // 길면 자르기
   if (s.length > 8) return s.substring(0, 8) + '…';
   return s;
 }
 
-// ─── 대시보드 로드 ───
 async function loadDashboard() {
   try {
     const data = await jsonp({action: 'ping'});
@@ -1038,6 +1050,8 @@ async function loadDashboard() {
     document.getElementById('statTotalSub').textContent = '데이터 ' + (meta.dataRowCount || 0).toLocaleString() + '건 통합 인덱스';
     document.getElementById('statBulman').textContent = (meta['count_불만'] || 0).toLocaleString();
     document.getElementById('statMisu').textContent = (meta['count_미수'] || 0).toLocaleString();
+    document.getElementById('statCho').textContent = (meta['count_초과'] || 0).toLocaleString();
+    document.getElementById('statEnd').textContent = (meta['count_계약종료'] || 0).toLocaleString();
     document.getElementById('statPC').textContent = (meta['count_PC확장성'] || 0).toLocaleString();
     document.getElementById('statMFP').textContent = (meta['count_복합기확장성'] || 0).toLocaleString();
     document.getElementById('statAS').textContent = (meta['count_AS'] || 0).toLocaleString() + '건';
@@ -1066,7 +1080,6 @@ function formatRelative(iso) {
 
 loadDashboard();
 
-// ─── 검색 ───
 let searchTimer = null;
 const searchInput = document.getElementById('searchInput');
 const clearBtn = document.getElementById('clearBtn');
@@ -1177,7 +1190,6 @@ function renderResults(data) {
   resultArea.innerHTML = html;
 }
 
-// ─── 상세 ───
 async function selectVendor(name) {
   const search = document.getElementById('screen-search');
   const detail = document.getElementById('screen-detail');
@@ -1284,7 +1296,6 @@ function goBack() {
   setTimeout(() => searchInput.focus(), 100);
 }
 
-// ═══ 관리자 화면 ═══
 function openAdmin() {
   const search = document.getElementById('screen-search');
   const admin = document.getElementById('screen-admin');
@@ -1300,22 +1311,16 @@ function closeAdmin() {
   document.getElementById('screen-search').style.display = 'block';
 }
 
-// ─── 파서 ───
+// ─── 파서 (이전과 동일) ───
 const AS_HEADERS = ['AS날짜','작성자','업체명','지역','등급','모델명','시리얼넘버','자산기번','내용','처리내용'];
 let parsedRows = [];
-
 const dropZone = document.getElementById('dropZone');
 const fileInput = document.getElementById('fileInput');
 const fileList = document.getElementById('fileList');
 const resultPanel = document.getElementById('resultPanel');
 
-dropZone.addEventListener('click', (e) => {
-  if (e.target.tagName !== 'INPUT') fileInput.click();
-});
-dropZone.addEventListener('dragover', (e) => {
-  e.preventDefault();
-  dropZone.classList.add('dragover');
-});
+dropZone.addEventListener('click', (e) => { if (e.target.tagName !== 'INPUT') fileInput.click(); });
+dropZone.addEventListener('dragover', (e) => { e.preventDefault(); dropZone.classList.add('dragover'); });
 dropZone.addEventListener('dragleave', () => dropZone.classList.remove('dragover'));
 dropZone.addEventListener('drop', (e) => {
   e.preventDefault();
@@ -1326,10 +1331,7 @@ fileInput.addEventListener('change', (e) => handleFiles(e.target.files));
 
 async function handleFiles(files) {
   const txtFiles = Array.from(files).filter(f => f.name.toLowerCase().endsWith('.txt'));
-  if (txtFiles.length === 0) {
-    showToast('.txt 파일을 선택해주세요');
-    return;
-  }
+  if (txtFiles.length === 0) { showToast('.txt 파일을 선택해주세요'); return; }
 
   fileList.style.display = 'flex';
   fileList.innerHTML = '';
@@ -1354,7 +1356,6 @@ async function handleFiles(files) {
     const text = await f.text();
     const result = parseFile(text);
     allRows.push(...result.rows);
-
     const statusEl = fileList.querySelector(`[data-fname="${CSS.escape(f.name)}"]`);
     if (statusEl) {
       statusEl.className = 'file-status done';
@@ -1404,7 +1405,6 @@ function parseFile(text) {
   msgPattern.lastIndex = 0;
   while ((m = msgPattern.exec(text)) !== null) {
     const sender = m[1];
-    const time = m[2];
     const content = m[3];
     const pos = m.index;
 
@@ -1524,9 +1524,7 @@ function buildCSV() {
   }
   return lines.join('\n');
 }
-function sanitizeCell(s) {
-  return String(s).replace(/\t/g, ' ').replace(/\r?\n/g, ' / ').trim();
-}
+function sanitizeCell(s) { return String(s).replace(/\t/g, ' ').replace(/\r?\n/g, ' / ').trim(); }
 function csvEscape(s) {
   s = String(s);
   if (s.includes(',') || s.includes('"') || s.includes('\n')) {
@@ -1534,14 +1532,12 @@ function csvEscape(s) {
   }
   return s;
 }
-
 function showToast(msg) {
   const toast = document.getElementById('toast');
   toast.textContent = msg;
   toast.classList.add('show');
   setTimeout(() => toast.classList.remove('show'), 2400);
 }
-
 function escapeHtml(s) {
   return String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 }
