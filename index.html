@@ -32,7 +32,6 @@
       --border: rgba(0,0,0,0.06);
       --primary: #0066ff;
 
-      /* 퍼스트전산 브랜드 컬러 */
       --brand-deep: #0a1628;
       --brand-mid: #1a2b4a;
       --brand-accent: #0066ff;
@@ -45,6 +44,8 @@
       --color-pc-bg: #e7efff;
       --color-mfp: #6535d4;
       --color-mfp-bg: #efe9ff;
+      --color-as: #0d9488;
+      --color-as-bg: #ccfbf1;
 
       --shadow-sm: 0 1px 2px rgba(0,0,0,0.04), 0 1px 3px rgba(0,0,0,0.04);
       --shadow-md: 0 4px 16px rgba(10,22,40,0.08);
@@ -53,7 +54,7 @@
 
     .screen { min-height: 100vh; min-height: 100dvh; }
 
-    /* ─── 브랜드 헤더 (다크) ─── */
+    /* ─── 브랜드 헤더 ─── */
     .brand-header {
       background: linear-gradient(180deg, var(--brand-deep) 0%, var(--brand-mid) 100%);
       color: white;
@@ -69,19 +70,15 @@
       background: radial-gradient(circle, rgba(0,102,255,0.18) 0%, transparent 70%);
       pointer-events: none;
     }
-    .brand-header-inner {
-      padding: 14px 20px 24px;
-      position: relative;
-      z-index: 1;
-    }
-    .brand {
-      display: flex; align-items: center; gap: 10px;
+    .brand-header-inner { padding: 14px 20px 24px; position: relative; z-index: 1; }
+    .brand-row {
+      display: flex; align-items: center; justify-content: space-between;
       margin-bottom: 28px;
     }
+    .brand { display: flex; align-items: center; gap: 10px; }
     .brand-mark {
       width: 32px; height: 32px;
-      background: white;
-      color: var(--brand-deep);
+      background: white; color: var(--brand-deep);
       border-radius: 8px;
       display: flex; align-items: center; justify-content: center;
       font-size: 17px; font-weight: 800;
@@ -89,16 +86,20 @@
       box-shadow: 0 2px 6px rgba(0,0,0,0.15);
     }
     .brand-text { display: flex; flex-direction: column; gap: 1px; }
-    .brand-name {
-      font-size: 14px; font-weight: 700;
-      letter-spacing: -0.3px;
-      color: white;
+    .brand-name { font-size: 14px; font-weight: 700; letter-spacing: -0.3px; }
+    .brand-sub { font-size: 11px; font-weight: 500; color: rgba(255,255,255,0.55); }
+
+    .admin-btn {
+      width: 34px; height: 34px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.08);
+      border: 1px solid rgba(255,255,255,0.12);
+      color: rgba(255,255,255,0.7);
+      display: flex; align-items: center; justify-content: center;
+      cursor: pointer;
+      transition: background 0.15s;
     }
-    .brand-sub {
-      font-size: 11px; font-weight: 500;
-      color: rgba(255,255,255,0.55);
-      letter-spacing: -0.2px;
-    }
+    .admin-btn:active { background: rgba(255,255,255,0.18); }
 
     .hero { color: white; }
     .hero-eyebrow {
@@ -116,16 +117,14 @@
       font-size: 26px; font-weight: 800;
       letter-spacing: -0.7px;
       line-height: 1.2;
-      color: white;
     }
     .hero-sub {
       margin-top: 8px;
       font-size: 13.5px; font-weight: 400;
       color: rgba(255,255,255,0.6);
-      letter-spacing: -0.2px;
     }
 
-    /* ─── 검색 (sticky) ─── */
+    /* ─── 검색 ─── */
     .search-wrap {
       position: sticky;
       top: 0;
@@ -135,7 +134,7 @@
       backdrop-filter: saturate(180%) blur(20px);
       padding: 12px 16px;
       border-bottom: 0.5px solid transparent;
-      transition: border-color 0.2s, padding 0.2s;
+      transition: border-color 0.2s;
     }
     .search-wrap.scrolled { border-bottom-color: var(--border); }
     .search-box {
@@ -152,41 +151,32 @@
       border-color: var(--brand-accent);
       box-shadow: 0 0 0 3px rgba(0,102,255,0.1);
     }
-    .search-icon {
-      width: 18px; height: 18px;
-      color: var(--text-tertiary);
-      flex-shrink: 0;
-    }
+    .search-icon { width: 18px; height: 18px; color: var(--text-tertiary); flex-shrink: 0; }
     .search-input {
       flex: 1; min-width: 0;
       border: none; outline: none; background: none;
       padding: 14px 0;
-      font-size: 16px;
-      color: var(--text);
+      font-size: 16px; color: var(--text);
       letter-spacing: -0.3px;
     }
     .search-input::placeholder { color: var(--text-tertiary); }
     .clear-btn {
       width: 22px; height: 22px;
       border-radius: 50%;
-      background: var(--text-tertiary);
-      color: white;
+      background: var(--text-tertiary); color: white;
       display: none;
       align-items: center; justify-content: center;
-      flex-shrink: 0;
-      cursor: pointer;
+      flex-shrink: 0; cursor: pointer;
       font-size: 14px; line-height: 1;
       border: none; padding: 0;
     }
     .clear-btn.show { display: flex; }
     .clear-btn:active { background: var(--text-secondary); }
 
-    /* ─── 컨텐츠 ─── */
     .content { padding: 8px 16px calc(60px + env(safe-area-inset-bottom)); }
 
-    /* ─── 대시보드 (검색 전 첫화면) ─── */
+    /* ─── 대시보드 ─── */
     .dashboard { padding: 16px 16px calc(60px + env(safe-area-inset-bottom)); }
-
     .section-label {
       display: flex; align-items: center; justify-content: space-between;
       font-size: 12px; font-weight: 700;
@@ -205,7 +195,6 @@
     .pulse-dot {
       width: 6px; height: 6px; border-radius: 50%;
       background: #22c55e;
-      box-shadow: 0 0 0 0 rgba(34,197,94,0.4);
       animation: pulse 2s infinite;
     }
     @keyframes pulse {
@@ -214,7 +203,6 @@
       100% { box-shadow: 0 0 0 0 rgba(34,197,94,0); }
     }
 
-    /* 큰 메인 stat 카드 */
     .stat-hero {
       background: linear-gradient(135deg, var(--brand-deep) 0%, var(--brand-mid) 100%);
       color: white;
@@ -222,8 +210,7 @@
       padding: 20px 22px;
       box-shadow: var(--shadow-md);
       margin-bottom: 12px;
-      position: relative;
-      overflow: hidden;
+      position: relative; overflow: hidden;
     }
     .stat-hero::before {
       content: '';
@@ -236,28 +223,23 @@
     .stat-hero-label {
       font-size: 12px; font-weight: 600;
       color: rgba(255,255,255,0.6);
-      letter-spacing: -0.2px;
       margin-bottom: 4px;
     }
     .stat-hero-value {
       font-size: 36px; font-weight: 800;
-      letter-spacing: -1.2px;
-      line-height: 1.1;
+      letter-spacing: -1.2px; line-height: 1.1;
       display: flex; align-items: baseline; gap: 4px;
     }
     .stat-hero-unit {
       font-size: 14px; font-weight: 600;
       color: rgba(255,255,255,0.6);
-      letter-spacing: -0.3px;
     }
     .stat-hero-sub {
       margin-top: 8px;
       font-size: 12px; font-weight: 500;
       color: rgba(255,255,255,0.5);
-      letter-spacing: -0.2px;
     }
 
-    /* 카테고리별 작은 카드 그리드 */
     .stat-grid {
       display: grid;
       grid-template-columns: 1fr 1fr;
@@ -271,6 +253,7 @@
       display: flex; align-items: center; gap: 10px;
       animation: fadeInUp 0.3s ease-out backwards;
     }
+    .stat-card-wide { grid-column: span 2; }
     .stat-card-icon {
       width: 32px; height: 32px;
       border-radius: 8px;
@@ -281,7 +264,8 @@
     .stat-card-icon.misu { background: var(--color-misu-bg); color: var(--color-misu); }
     .stat-card-icon.pc { background: var(--color-pc-bg); color: var(--color-pc); }
     .stat-card-icon.mfp { background: var(--color-mfp-bg); color: var(--color-mfp); }
-    .stat-card-info { display: flex; flex-direction: column; gap: 1px; min-width: 0; }
+    .stat-card-icon.as { background: var(--color-as-bg); color: var(--color-as); }
+    .stat-card-info { display: flex; flex-direction: column; gap: 1px; min-width: 0; flex: 1; }
     .stat-card-num {
       font-size: 18px; font-weight: 800;
       letter-spacing: -0.4px;
@@ -291,11 +275,11 @@
     .stat-card-cat {
       font-size: 11.5px; font-weight: 500;
       color: var(--text-secondary);
-      letter-spacing: -0.2px;
       white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
     }
+    .stat-card-wide .stat-card-num { font-size: 22px; }
+    .stat-card-wide .stat-card-cat { font-size: 12px; }
 
-    /* 푸터 정보 */
     .info-card {
       margin-top: 16px;
       background: white;
@@ -313,16 +297,8 @@
       flex-shrink: 0;
     }
     .info-text { display: flex; flex-direction: column; gap: 1px; flex: 1; min-width: 0; }
-    .info-title {
-      font-size: 13px; font-weight: 600;
-      color: var(--text);
-      letter-spacing: -0.2px;
-    }
-    .info-sub {
-      font-size: 11.5px; font-weight: 400;
-      color: var(--text-tertiary);
-      letter-spacing: -0.2px;
-    }
+    .info-title { font-size: 13px; font-weight: 600; color: var(--text); }
+    .info-sub { font-size: 11.5px; color: var(--text-tertiary); }
 
     /* ─── 검색 결과 카드 ─── */
     .vendor-card {
@@ -368,24 +344,28 @@
     .badge.misu { background: var(--color-misu-bg); color: var(--color-misu); }
     .badge.pc { background: var(--color-pc-bg); color: var(--color-pc); }
     .badge.mfp { background: var(--color-mfp-bg); color: var(--color-mfp); }
-    .vendor-empty { color: var(--text-tertiary); font-size: 12px; letter-spacing: -0.2px; }
+    .badge.as { background: var(--color-as-bg); color: var(--color-as); }
+
+    .vendor-as-line {
+      margin-top: 6px;
+      display: inline-flex; align-items: center; gap: 5px;
+      font-size: 11.5px; font-weight: 600;
+      color: var(--color-as);
+      background: var(--color-as-bg);
+      padding: 3px 8px;
+      border-radius: 6px;
+    }
+    .vendor-as-line svg { width: 11px; height: 11px; }
+    .vendor-empty { color: var(--text-tertiary); font-size: 12px; }
     .chevron { color: var(--text-tertiary); flex-shrink: 0; width: 8px; height: 14px; }
 
-    /* ─── 빈 상태 / 로딩 ─── */
     .empty-state {
       text-align: center;
       padding: 60px 20px 40px;
       color: var(--text-tertiary);
     }
-    .empty-state-icon {
-      width: 48px; height: 48px;
-      margin: 0 auto 14px;
-      opacity: 0.3;
-    }
-    .empty-state-text {
-      font-size: 14px;
-      letter-spacing: -0.3px;
-    }
+    .empty-state-icon { width: 48px; height: 48px; margin: 0 auto 14px; opacity: 0.3; }
+    .empty-state-text { font-size: 14px; letter-spacing: -0.3px; }
     .skeleton-card {
       background: var(--bg-elevated);
       border-radius: 14px;
@@ -440,11 +420,7 @@
     .back-btn:active { opacity: 0.4; }
     .header-spacer { width: 60px; flex-shrink: 0; }
 
-    /* ─── 상세 hero ─── */
-    .vendor-hero {
-      padding: 16px 16px 8px;
-      background: var(--bg);
-    }
+    .vendor-hero { padding: 16px 16px 8px; background: var(--bg); }
     .vendor-hero h2 {
       font-size: 24px; font-weight: 700;
       letter-spacing: -0.6px;
@@ -453,7 +429,6 @@
       word-break: break-word;
     }
 
-    /* ─── 탭 ─── */
     .tabs-wrap {
       position: sticky;
       top: calc(var(--header-h) + env(safe-area-inset-top));
@@ -477,7 +452,6 @@
       background: var(--bg-elevated);
       color: var(--text-secondary);
       font-size: 13.5px; font-weight: 600;
-      letter-spacing: -0.3px;
       cursor: pointer;
       white-space: nowrap;
       transition: background 0.15s, color 0.15s, transform 0.1s;
@@ -486,8 +460,7 @@
     }
     .tab:active { transform: scale(0.96); }
     .tab.active {
-      background: var(--text);
-      color: white;
+      background: var(--text); color: white;
       border-color: var(--text);
     }
     .tab.disabled { opacity: 0.45; pointer-events: none; }
@@ -501,7 +474,6 @@
     }
     .tab.active .tab-count { background: rgba(255,255,255,0.22); color: #fff; }
 
-    /* ─── 상세 카드 ─── */
     .detail-card {
       background: var(--bg-elevated);
       border-radius: 14px;
@@ -510,10 +482,7 @@
       box-shadow: var(--shadow-sm);
       animation: fadeInUp 0.22s ease-out backwards;
     }
-    .detail-card-meta {
-      display: flex; align-items: center; gap: 6px;
-      margin-bottom: 10px;
-    }
+    .detail-card-meta { display: flex; align-items: center; gap: 6px; margin-bottom: 10px; }
     .sheet-tag {
       display: inline-block;
       padding: 3px 8px;
@@ -521,7 +490,6 @@
       background: var(--bg);
       color: var(--text-secondary);
       font-size: 11px; font-weight: 600;
-      letter-spacing: -0.2px;
     }
     .card-index {
       font-size: 11px; font-weight: 700;
@@ -539,15 +507,12 @@
     .detail-row.block { flex-direction: column; gap: 4px; padding: 11px 0 9px; }
     .detail-key {
       color: var(--text-secondary);
-      flex-shrink: 0;
-      width: 92px;
+      flex-shrink: 0; width: 92px;
       font-size: 13px;
-      letter-spacing: -0.2px;
     }
     .detail-row.block .detail-key {
       width: auto;
-      font-size: 11px;
-      font-weight: 700;
+      font-size: 11px; font-weight: 700;
       color: var(--text-tertiary);
       text-transform: uppercase;
       letter-spacing: 0.4px;
@@ -556,7 +521,6 @@
       flex: 1;
       color: var(--text);
       word-break: break-word;
-      letter-spacing: -0.2px;
       font-weight: 500;
     }
     .detail-row.block .detail-val { font-weight: 400; line-height: 1.55; }
@@ -584,8 +548,178 @@
       border-radius: 12px;
       font-size: 13.5px;
       margin: 12px 0;
-      letter-spacing: -0.2px;
     }
+
+    /* ═══════════════════════════════════════
+       관리자 화면 (AS 파서)
+       ═══════════════════════════════════════ */
+    .admin-section { padding: 16px; padding-bottom: calc(60px + env(safe-area-inset-bottom)); }
+    .admin-card {
+      background: white;
+      border-radius: 14px;
+      padding: 18px;
+      margin-bottom: 12px;
+      box-shadow: var(--shadow-sm);
+    }
+    .admin-card-title {
+      font-size: 15px; font-weight: 700;
+      color: var(--text);
+      margin-bottom: 4px;
+      letter-spacing: -0.3px;
+    }
+    .admin-card-sub {
+      font-size: 12.5px;
+      color: var(--text-secondary);
+      margin-bottom: 16px;
+      line-height: 1.5;
+    }
+    .steps-mini {
+      display: flex; flex-direction: column; gap: 8px;
+      margin-bottom: 14px;
+    }
+    .step-mini {
+      display: flex; align-items: flex-start; gap: 10px;
+      font-size: 12.5px;
+      color: var(--text-secondary);
+      line-height: 1.5;
+    }
+    .step-mini-num {
+      width: 20px; height: 20px;
+      background: var(--brand-deep); color: white;
+      border-radius: 5px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 11px; font-weight: 700;
+      flex-shrink: 0;
+      margin-top: 1px;
+    }
+    .step-mini b { color: var(--text); font-weight: 600; }
+
+    .drop-zone {
+      background: white;
+      border: 2px dashed #d1d5db;
+      border-radius: 14px;
+      padding: 32px 16px;
+      text-align: center;
+      transition: all 0.15s;
+      cursor: pointer;
+    }
+    .drop-zone:hover, .drop-zone.dragover {
+      border-color: var(--brand-accent);
+      background: #f0f6ff;
+    }
+    .drop-zone-icon {
+      width: 40px; height: 40px;
+      margin: 0 auto 10px;
+      color: var(--brand-accent);
+    }
+    .drop-zone-text {
+      font-size: 14px; font-weight: 600;
+      color: var(--text);
+      margin-bottom: 4px;
+    }
+    .drop-zone-sub { font-size: 12px; color: var(--text-tertiary); }
+    .drop-zone-btn {
+      display: inline-block;
+      margin-top: 12px;
+      padding: 8px 18px;
+      background: var(--brand-deep);
+      color: white;
+      border-radius: 8px;
+      font-size: 12.5px; font-weight: 600;
+      cursor: pointer;
+      border: none;
+    }
+
+    .file-list { margin-top: 12px; display: flex; flex-direction: column; gap: 6px; }
+    .file-item {
+      display: flex; align-items: center; gap: 10px;
+      padding: 10px 12px;
+      background: #f5f5f7;
+      border-radius: 10px;
+    }
+    .file-icon-mini {
+      width: 26px; height: 26px;
+      border-radius: 6px;
+      background: white; color: var(--brand-accent);
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0;
+    }
+    .file-info { flex: 1; min-width: 0; }
+    .file-name {
+      font-size: 12.5px; font-weight: 600; color: var(--text);
+      white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+    }
+    .file-meta { font-size: 11px; color: var(--text-tertiary); }
+    .file-status {
+      font-size: 10.5px; font-weight: 700;
+      padding: 3px 7px;
+      border-radius: 5px;
+      flex-shrink: 0;
+    }
+    .file-status.processing { background: #fef3c7; color: #f59e0b; }
+    .file-status.done { background: #dcfce7; color: #16a34a; }
+
+    .result-summary {
+      display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px;
+      margin-bottom: 14px;
+    }
+    .stat-mini {
+      text-align: center;
+      padding: 10px 0;
+      background: #f5f5f7;
+      border-radius: 8px;
+    }
+    .stat-mini-value {
+      font-size: 18px; font-weight: 800;
+      letter-spacing: -0.3px;
+      color: var(--text);
+    }
+    .stat-mini-label {
+      font-size: 10px; font-weight: 700;
+      color: var(--text-tertiary);
+      letter-spacing: 0.3px;
+      text-transform: uppercase;
+      margin-top: 2px;
+    }
+
+    .actions { display: flex; gap: 6px; }
+    .btn {
+      flex: 1;
+      padding: 12px;
+      border-radius: 10px;
+      font-size: 13px; font-weight: 700;
+      cursor: pointer; border: none;
+      transition: opacity 0.15s, transform 0.1s;
+      display: flex; align-items: center; justify-content: center; gap: 6px;
+    }
+    .btn:active { transform: scale(0.98); }
+    .btn-primary { background: var(--brand-accent); color: white; }
+    .btn-secondary { background: #f5f5f7; color: var(--text); }
+    .btn-link {
+      display: inline-flex; align-items: center; gap: 4px;
+      color: var(--brand-accent);
+      font-size: 12.5px; font-weight: 600;
+      text-decoration: none;
+      padding: 4px 0;
+    }
+
+    .toast {
+      position: fixed;
+      bottom: 24px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: var(--brand-deep);
+      color: white;
+      padding: 12px 20px;
+      border-radius: 999px;
+      font-size: 13.5px; font-weight: 600;
+      box-shadow: var(--shadow-md);
+      z-index: 100;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.2s, transform 0.2s;
+    }
+    .toast.show { opacity: 1; transform: translateX(-50%) translateY(-4px); }
 
     @media (min-width: 720px) {
       body { background: #ebebef; }
@@ -597,25 +731,28 @@
 
 <!-- ════ 검색 화면 ════ -->
 <div id="screen-search" class="screen">
-  <!-- 다크 브랜드 헤더 (스크롤 시 사라짐) -->
   <header class="brand-header">
     <div class="brand-header-inner">
-      <div class="brand">
-        <div class="brand-mark">F</div>
-        <div class="brand-text">
-          <div class="brand-name">퍼스트전산</div>
-          <div class="brand-sub">FIRSTOA</div>
+      <div class="brand-row">
+        <div class="brand">
+          <div class="brand-mark">F</div>
+          <div class="brand-text">
+            <div class="brand-name">퍼스트전산</div>
+            <div class="brand-sub">FIRSTOA</div>
+          </div>
         </div>
+        <button class="admin-btn" onclick="openAdmin()" type="button" aria-label="관리자">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+        </button>
       </div>
       <div class="hero">
         <span class="hero-eyebrow">거래처 통합</span>
         <h1 class="hero-title">한 번에<br>모두 조회</h1>
-        <div class="hero-sub">불만 · 미수 · PC확장성 · 복합기확장성</div>
+        <div class="hero-sub">불만 · 미수 · 확장성 · AS</div>
       </div>
     </div>
   </header>
 
-  <!-- 검색바 (sticky) -->
   <div id="searchWrap" class="search-wrap">
     <div class="search-box">
       <svg class="search-icon" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
@@ -626,7 +763,6 @@
     </div>
   </div>
 
-  <!-- 대시보드 (검색 전) -->
   <div id="dashboard" class="dashboard">
     <div class="section-label">
       <span>전체 현황</span>
@@ -642,7 +778,7 @@
           <span id="statTotal">—</span>
           <span class="stat-hero-unit">개사</span>
         </div>
-        <div class="stat-hero-sub" id="statTotalSub">데이터 N건 통합 인덱스</div>
+        <div class="stat-hero-sub" id="statTotalSub">데이터 통합 인덱스</div>
       </div>
     </div>
 
@@ -684,6 +820,15 @@
           <div class="stat-card-cat">복합기확장성</div>
         </div>
       </div>
+      <div class="stat-card stat-card-wide" style="animation-delay:240ms">
+        <div class="stat-card-icon as">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>
+        </div>
+        <div class="stat-card-info">
+          <div class="stat-card-num" id="statAS">—</div>
+          <div class="stat-card-cat">AS 처리 이력 · 카톡 자동 파싱</div>
+        </div>
+      </div>
     </div>
 
     <div class="info-card">
@@ -697,7 +842,6 @@
     </div>
   </div>
 
-  <!-- 검색 결과 영역 -->
   <div id="resultArea" class="content" style="display:none;"></div>
 </div>
 
@@ -727,17 +871,108 @@
   <div id="panel" class="content"></div>
 </div>
 
-<script>
-const GAS_URL = 'https://script.google.com/macros/s/AKfycbw1fMYxDhQObrtffi7_-RCaEwg5VdvTk7MNnKqCDsbcvDUr84LU-4VPjYeXf4jHaY3q/exec';
+<!-- ════ 관리자 화면 (AS 파서) ════ -->
+<div id="screen-admin" class="screen" style="display:none;">
+  <header class="app-header">
+    <div class="app-header-inner">
+      <button class="back-btn" onclick="closeAdmin()" type="button">
+        <svg width="11" height="18" viewBox="0 0 11 18" fill="none">
+          <path d="M9.5 1L1.5 9L9.5 17" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        검색
+      </button>
+      <h1>관리자</h1>
+      <div class="header-spacer"></div>
+    </div>
+  </header>
 
-const CATEGORIES = ['불만', '미수', 'PC확장성', '복합기확장성'];
-const BADGE_CLASS = { '불만':'bulman', '미수':'misu', 'PC확장성':'pc', '복합기확장성':'mfp' };
+  <div class="admin-section">
+    <div class="admin-card">
+      <div class="admin-card-title">AS 데이터 갱신</div>
+      <div class="admin-card-sub">카카오톡 4개 단톡방 .txt 파일을 드래그하면 자동으로 AS 양식만 추출합니다.</div>
+
+      <div class="steps-mini">
+        <div class="step-mini">
+          <div class="step-mini-num">1</div>
+          <div>4개 단톡방에서 <b>대화 내보내기 (.txt)</b></div>
+        </div>
+        <div class="step-mini">
+          <div class="step-mini-num">2</div>
+          <div>아래에 4개 파일 모두 드래그 → <b>자동 파싱</b></div>
+        </div>
+        <div class="step-mini">
+          <div class="step-mini-num">3</div>
+          <div><b>구글시트에 복사</b> 클릭 → AS_data 시트 'AS' 탭 A1에 Ctrl+V (덮어쓰기)</div>
+        </div>
+        <div class="step-mini">
+          <div class="step-mini-num">4</div>
+          <div>최대 1시간 후 자동 인덱스 갱신 → 검색에 반영</div>
+        </div>
+      </div>
+
+      <div id="dropZone" class="drop-zone">
+        <svg class="drop-zone-icon" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M7 16a4 4 0 0 1-.88-7.9A5 5 0 0 1 15.9 6 4.5 4.5 0 0 1 19 14.5M12 12v8m-3-5 3-3 3 3"/>
+        </svg>
+        <div class="drop-zone-text">카카오톡 .txt 파일</div>
+        <div class="drop-zone-sub">드래그 또는 클릭해서 선택 (여러 개 동시)</div>
+        <button class="drop-zone-btn" type="button">파일 선택</button>
+        <input id="fileInput" type="file" accept=".txt" multiple style="display:none">
+      </div>
+
+      <div id="fileList" class="file-list" style="display:none;"></div>
+
+      <div id="resultPanel" style="display:none; margin-top: 14px;">
+        <div class="result-summary">
+          <div class="stat-mini">
+            <div class="stat-mini-value" id="statTotalParsed">0</div>
+            <div class="stat-mini-label">AS 양식</div>
+          </div>
+          <div class="stat-mini">
+            <div class="stat-mini-value" id="statVendorsParsed">0</div>
+            <div class="stat-mini-label">고유 업체</div>
+          </div>
+          <div class="stat-mini">
+            <div class="stat-mini-value" id="statDupParsed">0</div>
+            <div class="stat-mini-label">중복 제거</div>
+          </div>
+        </div>
+
+        <div class="actions">
+          <button class="btn btn-primary" id="copyBtn" type="button">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+            구글시트에 복사
+          </button>
+          <button class="btn btn-secondary" id="csvBtn" type="button">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+            CSV
+          </button>
+        </div>
+
+        <div style="margin-top:14px; text-align:center;">
+          <a class="btn-link" href="https://docs.google.com/spreadsheets/d/1-AcARUVMzSY4ln6jRhf751AJ60pTVf-4BAOBhec4hUo/edit" target="_blank">
+            AS_data 시트 열기 →
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="toast" class="toast">복사 완료</div>
+
+<script>
+const GAS_URL = 'https://script.google.com/macros/s/AKfycbwnzufxv6DKkz6IdskocwNZ4-pk2KuciX2-cceR7ed7pW5Ra2LyBTXQy8P2l94aeQVM/exec';
+
+const CATEGORIES = ['불만', '미수', 'PC확장성', '복합기확장성', 'AS'];
+const BADGE_CLASS = { '불만':'bulman', '미수':'misu', 'PC확장성':'pc', '복합기확장성':'mfp', 'AS':'as' };
 
 const LONG_TEXT_FIELDS = new Set([
   '불만내용', '사실확인', '대안제시', '재발방지',
   '특이사항', '첫등록내용', '영업진행상황', '영업활동',
   '인원 추가 설명', '시기 추가 설명', '주소', '프로젝트주소',
-  '도로명주소', '세부주소'
+  '도로명주소', '세부주소',
+  '내용', '처리내용'
 ]);
 const PHONE_FIELDS = new Set(['거래처연락처', '연락처', '키맨전화번호', '휴대폰번호']);
 const EMAIL_FIELDS = new Set(['메일주소']);
@@ -763,7 +998,7 @@ function jsonp(params, timeoutMs) {
   });
 }
 
-// ─── 페이지 로드 시 통계 가져오기 ───
+// ─── 대시보드 로드 ───
 async function loadDashboard() {
   try {
     const data = await jsonp({action: 'ping'});
@@ -775,6 +1010,7 @@ async function loadDashboard() {
     document.getElementById('statMisu').textContent = (meta['count_미수'] || 0).toLocaleString();
     document.getElementById('statPC').textContent = (meta['count_PC확장성'] || 0).toLocaleString();
     document.getElementById('statMFP').textContent = (meta['count_복합기확장성'] || 0).toLocaleString();
+    document.getElementById('statAS').textContent = (meta['count_AS'] || 0).toLocaleString() + '건';
 
     if (meta.lastUpdate) {
       document.getElementById('updateText').textContent = formatRelative(meta.lastUpdate) + ' 갱신';
@@ -794,8 +1030,7 @@ function formatRelative(iso) {
     if (min < 60) return min + '분 전';
     const hr = Math.floor(min / 60);
     if (hr < 24) return hr + '시간 전';
-    const day = Math.floor(hr / 24);
-    return day + '일 전';
+    return Math.floor(hr / 24) + '일 전';
   } catch (e) { return '-'; }
 }
 
@@ -811,7 +1046,6 @@ const resultArea = document.getElementById('resultArea');
 searchInput.addEventListener('input', (e) => {
   clearTimeout(searchTimer);
   const q = e.target.value.trim();
-
   if (q.length === 0) {
     clearBtn.classList.remove('show');
     dashboard.style.display = 'block';
@@ -820,13 +1054,10 @@ searchInput.addEventListener('input', (e) => {
     return;
   }
   clearBtn.classList.add('show');
-
-  // 검색 시작 → 대시보드 숨기고 결과 영역 표시
   dashboard.style.display = 'none';
   resultArea.style.display = 'block';
   resultArea.innerHTML = renderSkeleton();
   const seq = ++state.searchSeq;
-
   searchTimer = setTimeout(async () => {
     try {
       const data = await jsonp({action: 'search', q: q});
@@ -848,7 +1079,6 @@ function clearSearch() {
   resultArea.innerHTML = '';
 }
 
-// ─── 검색 시 헤더 살짝 효과 ───
 window.addEventListener('scroll', () => {
   const wrap = document.getElementById('searchWrap');
   if (window.scrollY > 50) wrap.classList.add('scrolled');
@@ -883,18 +1113,34 @@ function renderResults(data) {
   data.results.forEach((item, idx) => {
     const counts = item.counts || {};
     let badges = '';
-    for (const cat of CATEGORIES) {
+    // AS 제외 (별도 라인에 표시)
+    for (const cat of ['불만', '미수', 'PC확장성', '복합기확장성']) {
       const n = counts[cat] || 0;
       if (n === 0) continue;
       badges += `<span class="badge ${BADGE_CLASS[cat]}">${cat}<span class="badge-num">${n}</span></span>`;
     }
-    if (!badges) badges = '<span class="vendor-empty">데이터 없음</span>';
+    if (!badges) badges = '<span class="vendor-empty">기본 데이터 없음</span>';
+
+    // AS 별도 라인
+    let asLine = '';
+    if (item.as_meta) {
+      const m = item.as_meta;
+      const parts = ['AS ' + (counts['AS'] || 0) + '건'];
+      if (m.recent_date) parts.push(m.recent_date);
+      if (m.region) parts.push(m.region);
+      asLine = `
+        <div class="vendor-as-line">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>
+          ${escapeHtml(parts.join(' · '))}
+        </div>`;
+    }
 
     html += `
       <div class="vendor-card" style="animation-delay:${Math.min(idx * 30, 240)}ms" onclick="selectVendor('${escapeAttr(item.vendor)}')">
         <div class="vendor-card-content">
           <div class="vendor-name">${escapeHtml(item.vendor)}</div>
           <div class="vendor-badges">${badges}</div>
+          ${asLine}
         </div>
         <svg class="chevron" width="8" height="14" viewBox="0 0 8 14" fill="none">
           <path d="M1 1L7 7L1 13" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
@@ -972,7 +1218,6 @@ function renderPanel() {
   let html = '';
   items.forEach((item, idx) => {
     html += `<div class="detail-card" style="animation-delay:${Math.min(idx * 30, 200)}ms">`;
-
     const metaParts = [];
     if (item._시트) metaParts.push(`<span class="sheet-tag">${escapeHtml(item._시트)}</span>`);
     metaParts.push(`<span class="card-index">#${idx + 1}</span>`);
@@ -1010,6 +1255,269 @@ function goBack() {
   document.getElementById('screen-detail').style.display = 'none';
   document.getElementById('screen-search').style.display = 'block';
   setTimeout(() => searchInput.focus(), 100);
+}
+
+// ═══════════════════════════════════════
+// 관리자 화면
+// ═══════════════════════════════════════
+function openAdmin() {
+  const search = document.getElementById('screen-search');
+  const admin = document.getElementById('screen-admin');
+  search.style.display = 'none';
+  admin.style.display = 'block';
+  admin.classList.remove('slide-in');
+  void admin.offsetWidth;
+  admin.classList.add('slide-in');
+  window.scrollTo(0, 0);
+}
+function closeAdmin() {
+  document.getElementById('screen-admin').style.display = 'none';
+  document.getElementById('screen-search').style.display = 'block';
+}
+
+// ─── 파서 ───
+const AS_HEADERS = ['AS날짜','작성자','업체명','지역','등급','모델명','시리얼넘버','자산기번','내용','처리내용'];
+let parsedRows = [];
+
+const dropZone = document.getElementById('dropZone');
+const fileInput = document.getElementById('fileInput');
+const fileList = document.getElementById('fileList');
+const resultPanel = document.getElementById('resultPanel');
+
+dropZone.addEventListener('click', (e) => {
+  if (e.target.tagName !== 'INPUT') fileInput.click();
+});
+dropZone.addEventListener('dragover', (e) => {
+  e.preventDefault();
+  dropZone.classList.add('dragover');
+});
+dropZone.addEventListener('dragleave', () => dropZone.classList.remove('dragover'));
+dropZone.addEventListener('drop', (e) => {
+  e.preventDefault();
+  dropZone.classList.remove('dragover');
+  handleFiles(e.dataTransfer.files);
+});
+fileInput.addEventListener('change', (e) => handleFiles(e.target.files));
+
+async function handleFiles(files) {
+  const txtFiles = Array.from(files).filter(f => f.name.toLowerCase().endsWith('.txt'));
+  if (txtFiles.length === 0) {
+    showToast('.txt 파일을 선택해주세요');
+    return;
+  }
+
+  fileList.style.display = 'flex';
+  fileList.innerHTML = '';
+  for (const f of txtFiles) {
+    const item = document.createElement('div');
+    item.className = 'file-item';
+    item.innerHTML = `
+      <div class="file-icon-mini">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+      </div>
+      <div class="file-info">
+        <div class="file-name">${escapeHtml(f.name)}</div>
+        <div class="file-meta">${formatSize(f.size)}</div>
+      </div>
+      <span class="file-status processing" data-fname="${escapeAttr(f.name)}">처리중</span>
+    `;
+    fileList.appendChild(item);
+  }
+
+  const allRows = [];
+  for (const f of txtFiles) {
+    const text = await f.text();
+    const result = parseFile(text);
+    allRows.push(...result.rows);
+
+    const statusEl = fileList.querySelector(`[data-fname="${CSS.escape(f.name)}"]`);
+    if (statusEl) {
+      statusEl.className = 'file-status done';
+      statusEl.textContent = `${result.rows.length}건`;
+    }
+  }
+
+  // 중복 제거
+  const seen = new Set();
+  const dedup = [];
+  for (const r of allRows) {
+    const key = (r.AS날짜 || '') + '|' + (r.업체명 || '') + '|' + (r.시리얼넘버 || '') + '|' + (r.모델명 || '') + '|' + (r.작성자 || '');
+    if (seen.has(key)) continue;
+    seen.add(key);
+    dedup.push(r);
+  }
+
+  // 날짜순 정렬 (최신부터)
+  dedup.sort((a, b) => (b.AS날짜 || '').localeCompare(a.AS날짜 || ''));
+
+  parsedRows = dedup;
+  renderParseResult(allRows.length, dedup.length);
+}
+
+function formatSize(b) {
+  if (b < 1024) return b + ' B';
+  if (b < 1024*1024) return (b/1024).toFixed(1) + ' KB';
+  return (b/1024/1024).toFixed(1) + ' MB';
+}
+
+function parseFile(text) {
+  const datePattern = /-+\s*(\d{4})년\s*(\d{1,2})월\s*(\d{1,2})일\s*\S+\s*-+/g;
+  const msgPattern = /(?:\r?\n)?\[([^\]]+?)\] \[([^\]]+?)\] ([\s\S]+?)(?=(?:\r?\n)\[[^\]]+?\] \[[^\]]+?\] |(?:\r?\n)-+\s*\d{4}년|$)/g;
+
+  const datePositions = [];
+  let m;
+  while ((m = datePattern.exec(text)) !== null) {
+    datePositions.push({ pos: m.index, year: +m[1], month: +m[2], day: +m[3] });
+  }
+  function getDateForPos(pos) {
+    let last = null;
+    for (const dp of datePositions) {
+      if (dp.pos > pos) break;
+      last = dp;
+    }
+    return last;
+  }
+
+  const rows = [];
+  msgPattern.lastIndex = 0;
+  while ((m = msgPattern.exec(text)) !== null) {
+    const sender = m[1];
+    const time = m[2];
+    const content = m[3];
+    const pos = m.index;
+
+    if (!content.includes('구분: AS') && !content.includes('구분:AS') &&
+        !content.includes('구분: A/S') && !content.includes('구분:A/S')) continue;
+
+    const fields = extractAS(content);
+    const vendor = fields.업체명;
+    if (!vendor || vendor.length < 2 || vendor === '부서명 :' || vendor === '부서명:') continue;
+
+    const dateInfo = getDateForPos(pos);
+    const dateStr = dateInfo ? `${dateInfo.year}-${pad(dateInfo.month)}-${pad(dateInfo.day)}` : '';
+
+    rows.push({
+      AS날짜: dateStr,
+      작성자: sender.replace(/님$/, ''),
+      업체명: vendor,
+      지역: fields.지역 || '',
+      등급: fields.등급 || '',
+      모델명: fields.모델명 || '',
+      시리얼넘버: fields.시리얼넘버 || '',
+      자산기번: fields.자산기번 || '',
+      내용: fields.내용 || '',
+      처리내용: fields.처리내용 || ''
+    });
+  }
+  return { rows };
+}
+
+function pad(n) { return String(n).padStart(2, '0'); }
+
+function extractAS(content) {
+  const fields = {};
+  fields.업체명 = extractField(content, '업체명');
+  fields.부서명 = extractField(content, '부서명');
+  fields.지역 = extractField(content, '지역');
+  fields.모델명 = extractField(content, '모델명');
+  fields.시리얼넘버 = extractField(content, '시리얼넘버');
+  fields.자산기번 = extractField(content, '자산기번');
+  fields.내용 = extractField(content, '내용', true);
+  fields.처리내용 = extractField(content, '처리내용', true);
+
+  const gradeMatch = content.match(/등급\s*:?\s*\(?\s*([^),\n\r]+?)\s*[,)\r\n]/);
+  if (gradeMatch) {
+    const v = gradeMatch[1].trim();
+    if (v && v !== '1 , 2 , 3' && v !== '1,2,3' && !/^\d?\s*,\s*\d/.test(v)) {
+      fields.등급 = v;
+    }
+  }
+  return fields;
+}
+
+function extractField(content, label, multiline) {
+  const escLabel = label.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+  const pattern = new RegExp(
+    `(?:^|[\\r\\n])${escLabel}\\s*:?\\s*([\\s\\S]*?)(?=[\\r\\n](?:[^\\r\\n]*?:|-{5,}|※|\\d+\\.\\s*[가-힣]+:))`,
+    ''
+  );
+  const match = content.match(pattern);
+  if (!match) return null;
+  let val = match[1].trim();
+  if (!val) return null;
+  if (val.match(/^(부서명|지역|모델명|시리얼넘버|자산기번|내용|처리내용|매수|토너잔량|폐통|특이사항)\s*:?\s*$/)) return null;
+  return multiline ? val : val.split('\n')[0].trim();
+}
+
+function renderParseResult(totalRaw, totalDedup) {
+  resultPanel.style.display = 'block';
+  document.getElementById('statTotalParsed').textContent = totalRaw.toLocaleString();
+  const vendorSet = new Set(parsedRows.map(r => r.업체명));
+  document.getElementById('statVendorsParsed').textContent = vendorSet.size.toLocaleString();
+  document.getElementById('statDupParsed').textContent = (totalRaw - totalDedup).toLocaleString();
+}
+
+document.getElementById('copyBtn').addEventListener('click', async () => {
+  if (parsedRows.length === 0) { showToast('파싱된 데이터 없음'); return; }
+  const tsv = buildTSV();
+  try {
+    await navigator.clipboard.writeText(tsv);
+    showToast('✓ 복사됨 — AS_data 시트 A1에 Ctrl+V');
+  } catch (e) {
+    const ta = document.createElement('textarea');
+    ta.value = tsv;
+    document.body.appendChild(ta);
+    ta.select();
+    document.execCommand('copy');
+    document.body.removeChild(ta);
+    showToast('✓ 복사됨 — AS_data 시트 A1에 Ctrl+V');
+  }
+});
+
+document.getElementById('csvBtn').addEventListener('click', () => {
+  if (parsedRows.length === 0) { showToast('파싱된 데이터 없음'); return; }
+  const csv = buildCSV();
+  const blob = new Blob(['\ufeff' + csv], { type: 'text/csv;charset=utf-8;' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = `AS_data_${new Date().toISOString().slice(0,10)}.csv`;
+  a.click();
+  URL.revokeObjectURL(url);
+});
+
+function buildTSV() {
+  const lines = [AS_HEADERS.join('\t')];
+  for (const r of parsedRows) {
+    const cells = AS_HEADERS.map(h => sanitizeCell(r[h] || ''));
+    lines.push(cells.join('\t'));
+  }
+  return lines.join('\n');
+}
+function buildCSV() {
+  const lines = [AS_HEADERS.map(csvEscape).join(',')];
+  for (const r of parsedRows) {
+    const cells = AS_HEADERS.map(h => csvEscape(r[h] || ''));
+    lines.push(cells.join(','));
+  }
+  return lines.join('\n');
+}
+function sanitizeCell(s) {
+  return String(s).replace(/\t/g, ' ').replace(/\r?\n/g, ' / ').trim();
+}
+function csvEscape(s) {
+  s = String(s);
+  if (s.includes(',') || s.includes('"') || s.includes('\n')) {
+    return '"' + s.replace(/"/g, '""') + '"';
+  }
+  return s;
+}
+
+function showToast(msg) {
+  const toast = document.getElementById('toast');
+  toast.textContent = msg;
+  toast.classList.add('show');
+  setTimeout(() => toast.classList.remove('show'), 2400);
 }
 
 function escapeHtml(s) {
