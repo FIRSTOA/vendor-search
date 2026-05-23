@@ -992,13 +992,18 @@
 <div id="toast" class="toast">복사 완료</div>
 
 <script>
-const GAS_GET_URL = 'https://script.google.com/macros/s/AKfycbzyVqHd4o--koM60CT38coGHhNORaAdDk5c8Fr1ugINzip9V7nzH4H-7Oj66u-JvJTX/exec';
+const GAS_GET_URL = 'https://script.google.com/macros/s/AKfycbxJ4BemIQdckGX8lDhfNglNXgkf9FTrOs-guB4yWqLfmqpikzoTgnWCG4kUtvcYmp7Z/exec';
 const GAS_POST_URL = 'https://script.google.com/macros/s/AKfycbwbNgDpiCE7btQs-OwVMHV3GkA9-xV4oJdVXsTwQ9YB1uzMUiotJPNRwFUKxNiG6qYs/exec';
 
 const CATEGORIES = ['불만', '미수', '초과', 'PC확장성', '복합기확장성', 'AS', '업체정보'];
 const BADGE_CLASS = {
-  '불만':'bulman', '미수':'misu', '초과':'cho',
-  'PC확장성':'pc', '복합기확장성':'mfp', 'AS':'as', '업체정보':'info'
+  '불만':'bulman',
+  '미수':'misu',
+  '초과':'cho',
+  'PC확장성':'pc',
+  '복합기확장성':'mfp',
+  'AS':'as',
+  '업체정보':'info'
 };
 
 const CATEGORY_ICON = {
@@ -1012,15 +1017,35 @@ const CATEGORY_ICON = {
 };
 
 const LONG_TEXT_FIELDS = new Set([
-  '불만내용', '사실확인', '대안제시', '재발방지',
-  '특이사항', '첫등록내용', '영업진행상황', '영업활동',
-  '인원 추가 설명', '시기 추가 설명', '주소', '프로젝트주소',
-  '도로명주소', '세부주소',
-  '내용', '처리내용', '접수내용',
+  '불만내용',
+  '사실확인',
+  '대안제시',
+  '재발방지',
+  '특이사항',
+  '첫등록내용',
+  '영업진행상황',
+  '영업활동',
+  '인원 추가 설명',
+  '시기 추가 설명',
+  '주소',
+  '프로젝트주소',
+  '도로명주소',
+  '세부주소',
+  '내용',
+  '처리내용',
+  '접수내용',
   '위탁/유지보수및기타사항',
   '주소(실납품주소,도로명주소)',
   '주소상세주소',
-  '추가조건'
+  '추가조건',
+
+  // 복합기확장성 신규 통합 컬럼
+  '키맨 성향',
+  '영업 접근 전략',
+  '의사결정 파급력',
+  '개인 히스토리',
+  '현재 경쟁사/장비',
+  '경쟁사 불만(PainPoint)'
 ]);
 const PHONE_FIELDS = new Set(['거래처연락처', '연락처', '키맨전화번호', '휴대폰번호', '전화번호', '일반전화']);
 const EMAIL_FIELDS = new Set(['메일주소']);
